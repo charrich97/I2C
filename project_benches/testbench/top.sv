@@ -1,7 +1,7 @@
 import utility_pkg::*;
 `timescale 1ns / 10ps
 //***************************************************************************
-//Testbench	Chuck Richardson UNITY_ID:cdricha5
+//Testbench Chuck Richardson UNITY_ID:cdricha5
 //***************************************************************************
 import ncsu_pkg::*;
 import i2cmb_env_pkg::*;
@@ -13,23 +13,23 @@ module top();
 //***************************************************************************
 //DUT/Data Parameters
 //***************************************************************************
-parameter int NUM_I2C_BUSSES 	= 1;
+parameter int NUM_I2C_BUSSES  = 1;
 
 //***************************************************************************
 //Signals to I2C IICMB
 //***************************************************************************
-bit  														clk												;
-bit  														rst												;
-wire 														cyc												;
-wire 														stb												;
-wire 														we												;
-tri1 														ack												;
-wire 			[WB_ADDR_WIDTH-1:0] 	adr												;
-wire 			[WB_DATA_WIDTH-1:0] 	dat_wr_o									;
-wire 			[WB_DATA_WIDTH-1:0] 	dat_rd_i									;
-wire 														irq												;
-tri  			[NUM_I2C_BUSSES-1:0] 	scl												;
-tri  			[NUM_I2C_BUSSES-1:0] 	sda												;
+bit                             clk                       ;
+bit                             rst                       ;
+wire                            cyc                       ;
+wire                            stb                       ;
+wire                            we                        ;
+tri1                            ack                       ;
+wire      [WB_ADDR_WIDTH-1:0]   adr                       ;
+wire      [WB_DATA_WIDTH-1:0]   dat_wr_o                  ;
+wire      [WB_DATA_WIDTH-1:0]   dat_rd_i                  ;
+wire                            irq                       ;
+tri       [NUM_I2C_BUSSES-1:0]  scl                       ;
+tri       [NUM_I2C_BUSSES-1:0]  sda                       ;
 
 
 // ****************************************************************************
@@ -37,7 +37,7 @@ tri  			[NUM_I2C_BUSSES-1:0] 	sda												;
 // ****************************************************************************
 initial clk_gen : 
 begin 
-	forever #5	clk = ~ clk;
+  forever #5  clk = ~ clk;
 end : clk_gen
 
 // ****************************************************************************
@@ -45,9 +45,9 @@ end : clk_gen
 // ****************************************************************************
 initial reset_gen : 
 begin  
-		 			rst = 1;
-#113			rst = 0;
-end : reset_gen		 
+          rst = 1;
+#113      rst = 0;
+end : reset_gen    
 
 // ****************************************************************************
 // Instantiate the Wishbone master Bus Functional Model
@@ -60,7 +60,7 @@ wb_bus (
   // System sigals
   .clk_i(clk),
   .rst_i(rst),
-	.irq_i(irq),
+  .irq_i(irq),
   // Master signals
   .cyc_o(cyc),
   .stb_o(stb),
@@ -87,8 +87,8 @@ i2c_if       #(
       )
 i2c_bus (
   // System sigals
-	.scl					(scl									),
-	.sda					(sda									)
+  .scl          (scl                  ),
+  .sda          (sda                  )
   );
 
 
@@ -129,14 +129,14 @@ i2c_bus (
 i2cmb_test tst;
 
 initial begin : test_flow 
-	ncsu_config_db#(virtual wb_if)::set("tst.env.w_agent", wb_bus);
-	ncsu_config_db#(virtual i2c_if)::set("tst.env.i_agent", i2c_bus);
+  ncsu_config_db#(virtual wb_if)::set("tst.env.w_agent", wb_bus);
+  ncsu_config_db#(virtual i2c_if)::set("tst.env.i_agent", i2c_bus);
 
-	tst=new("tst",null);
-	wait  (rst == 0);
-	tst.run();
-	#5000;
-	$finish;
+  tst=new("tst",null);
+  wait  (rst == 0);
+  tst.run();
+  #5000;
+  $finish;
 end : test_flow
 
 endmodule
