@@ -4,12 +4,12 @@
 class i2c_configuration extends ncsu_configuration;
 
   covergroup i2c_configuration_cg;
-  		option.per_instance = 1;
-    	option.name = name;
+      option.per_instance = 1;
+      option.name = name;
   endgroup
 
   function void sample_coverage();
-  	i2c_configuration_cg.sample();
+    i2c_configuration_cg.sample();
   endfunction
   
   function new(string name=""); 

@@ -1,8 +1,8 @@
 class i2cmb_environment extends ncsu_component;
 
   i2cmb_env_configuration configuration;
-  wb_agent         				w_agent;
-  i2c_agent        				i_agent;
+  wb_agent                w_agent;
+  i2c_agent               i_agent;
   i2cmb_predictor         pred;
   i2cmb_scoreboard        scbd;
   i2cmb_coverage          coverage;
@@ -16,22 +16,22 @@ class i2cmb_environment extends ncsu_component;
   endfunction
 
   virtual function void build();
-    w_agent 	= new("w_agent",this);
+    w_agent   = new("w_agent",this);
     w_agent.set_configuration(configuration.wb_agent_config);
     w_agent.build();
 
-    i_agent 	= new("i_agent",this);
+    i_agent   = new("i_agent",this);
     i_agent.set_configuration(configuration.i2c_agent_config);
     i_agent.build();
 
-    pred  		= new("pred", this);
+    pred      = new("pred", this);
     pred.set_configuration(configuration);
     pred.build();
 
-    scbd  		= new("scbd", this);
+    scbd      = new("scbd", this);
     scbd.build();
 
-    coverage 	= new("coverage", this);
+    coverage  = new("coverage", this);
     coverage.set_configuration(configuration);
     coverage.build();
 
